@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/app/internal/service/category/category.go" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/app/internal/service/problem/problem.go" dialect="DB2" />
+    <file url="file://$PROJECT_DIR$/manifest/sql/mysql.sql" dialect="MySQL" />
+    <file url="PROJECT" dialect="MySQL" />
+  </component>
+</project>

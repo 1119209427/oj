@@ -1,0 +1,58 @@
+version: "3.3"
+
+services:
+  food:
+    image: alpine:3.16.2
+    container_name: food
+    restart: always
+    networks:
+      - food
+      - nginx
+    ports:
+      - '8080:8080'
+    volumes:
+      - '/usr/share/zoneinfo/Australia/Melbourne:/usr/share/zoneinfo/Australia/Melbourne'
+      - '/usr/share/zoneinfo/Australia/Melbourne:/etc/localtime'
+      - './oj:/oj'
+      - './manifest:/manifest'
+      - './log:/log'
+    entrypoint:
+      - ''
+    command:
+      - /oj
+    depends_on:
+      - mysql
+      - redis
+  mysql:
+    image: mysql:5.7.39-debian
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./manifest/sql/mysql:/data/sql
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - oj
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '197920'
+  redis:
+    image: redis:7.0.5-alpine
+    container_name: redis
+    restart: always
+    networks:
+      - oj
+    volumes:
+      - ./manifest/config/redis:/etc/redis
+      - ./data/redis:/data
+    entrypoint:
+      - ''
+    command:
+      - redis-server
+      - /etc/redis/redis.conf
+
+networks:
+  food:
+    driver: bridge
+  nginx:
+    external: true
